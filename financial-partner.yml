@@ -1,0 +1,482 @@
+swagger: '3.0'
+info:
+  title: Financial-Partner API
+  description: >-
+    The Fidelity International Financial-Advisers API retrieve consultant and adviser details and related sub UAN information.
+  version: 1.0.0
+  termsOfService: 'https://developer.fil.com/legal'
+  contact:
+    name: API Support
+    email: api@fil.com
+host: sandbox.api.fil.com
+schemes:
+  - https
+basePath: /financial-partner/v1
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  OAuth2:
+    type: oauth2
+    flow: application
+    tokenUrl: >-
+      https://sandbox.api.fil.com/identity/v1/tokens?grant_type=client_credentials
+    scopes:
+      read: Grants read access.
+paths:
+  
+  '/consultant/{consultantId}':
+    get:
+      tags:
+        - Consultant API
+      summary: Retrieve a specific consultant and their details by an consultantId.
+      security:
+        - OAuth2: []
+      operationId: Retrieve a consultant.
+      parameters:
+        - name: consultantId
+          in: path
+          description: The consultantId of the consultant you want to retrieve.
+          required: true
+          type: string
+  
+      responses:
+        '200':
+          description: Request has been successfully processed.
+          schema:
+            $ref: '#/definitions/ConsultantResponse'
+        '400':
+          description: Bad request. Refer to the moreinfo section for details.  Please check that you've entered the correct parameters.
+          schema:
+            $ref: '#/definitions/MoreInfo'
+          headers:
+            requestId:
+              type: string
+              maxLength: 36
+              pattern: '[a-zA-Z0-9\-_]+'
+              description: As per request
+        '401':
+          description: Unable to authorise the credentials that were supplied.
+          schema:
+            $ref: '#/definitions/MoreInfo'
+          headers:
+            requestId:
+              type: string
+              maxLength: 36
+              pattern: '[a-zA-Z0-9\-_]+'
+              description: As per request
+        '404':
+          description: Consultant with the specified Id was not found.
+          schema:
+            $ref: '#/definitions/MoreInfo'
+          headers:
+            requestId:
+              type: string
+              maxLength: 36
+              pattern: '[a-zA-Z0-9\-_]+'
+              description: >-
+               requestId is supplied by the caller and should be a unique identifier for this call only.
+        '500':
+          description: There was an internal issue calling the service. This is likely to be a permanent error. Please contact FIL for support.
+          schema:
+            $ref: '#/definitions/MoreInfo'
+          headers:
+            requestId:
+              type: string
+              maxLength: 36
+              pattern: '[a-zA-Z0-9\-_]+'
+              description: As per request.
+              
+  '/consultant/{consultantId}/controls':
+    get:
+      tags:
+        - Consultant API
+      summary: Retrieve consultant permissions by a consultantId.
+      security:
+        - OAuth2: []
+      operationId: Retrieve consultant permissions.
+      parameters:
+        - name: consultantId
+          in: path
+          description: The consultantId of the consultant you want to retrieve the permissions for.
+          required: true
+          type: string
+  
+      responses:
+        '200':
+          description: Request has been successfully processed.
+          schema:
+            $ref: '#/definitions/ConsultantControlResponse'
+        '400':
+          description: Bad request. Refer to the moreinfo section for details.  Please check that you've entered the correct parameters.
+          schema:
+            $ref: '#/definitions/MoreInfo'
+          headers:
+            requestId:
+              type: string
+              maxLength: 36
+              pattern: '[a-zA-Z0-9\-_]+'
+              description: As per request
+        '401':
+          description: Unable to authorise the credentials that were supplied.
+          schema:
+            $ref: '#/definitions/MoreInfo'
+          headers:
+            requestId:
+              type: string
+              maxLength: 36
+              pattern: '[a-zA-Z0-9\-_]+'
+              description: As per request
+        '404':
+          description: Consultant with the specified Id was not found.
+          schema:
+            $ref: '#/definitions/MoreInfo'
+          headers:
+            requestId:
+              type: string
+              maxLength: 36
+              pattern: '[a-zA-Z0-9\-_]+'
+              description: >-
+               requestId is supplied by the caller and should be a unique identifier for this call only.
+        '500':
+          description: There was an internal issue calling the service. This is likely to be a permanent error. Please contact FIL for support.
+          schema:
+            $ref: '#/definitions/MoreInfo'
+          headers:
+            requestId:
+              type: string
+              maxLength: 36
+              pattern: '[a-zA-Z0-9\-_]+'
+              description: As per request.
+
+  '/adviser-firm/{adviserId}':
+    get:
+      tags:
+        - Adviser API
+      summary: Retrieve a specific adviser details by an adviserId.
+      security:
+        - OAuth2: []
+      operationId: Retrieve a adviser.
+      parameters:
+        - name: adviserId
+          in: path
+          description: The adviserId of the adviser firm you want to retrieve.
+          required: true
+          type: string
+  
+      responses:
+        '200':
+          description: Request has been successfully processed.
+          schema:
+            $ref: '#/definitions/AdviserResponse'
+        '400':
+          description: Bad request. Refer to the moreinfo section for details.  Please check that you've entered the correct parameters.
+          schema:
+            $ref: '#/definitions/MoreInfo'
+          headers:
+            requestId:
+              type: string
+              maxLength: 36
+              pattern: '[a-zA-Z0-9\-_]+'
+              description: As per request
+        '401':
+          description: Unable to authorise the credentials that were supplied.
+          schema:
+            $ref: '#/definitions/MoreInfo'
+          headers:
+            requestId:
+              type: string
+              maxLength: 36
+              pattern: '[a-zA-Z0-9\-_]+'
+              description: As per request
+        '404':
+          description: Adviser firm with the specified Id was not found.
+          schema:
+            $ref: '#/definitions/MoreInfo'
+          headers:
+            requestId:
+              type: string
+              maxLength: 36
+              pattern: '[a-zA-Z0-9\-_]+'
+              description: >-
+               requestId is supplied by the caller and should be a unique identifier for this call only.
+        '500':
+          description: There was an internal issue calling the service. This is likely to be a permanent error. Please contact FIL for support.
+          schema:
+            $ref: '#/definitions/MoreInfo'
+          headers:
+            requestId:
+              type: string
+              maxLength: 36
+              pattern: '[a-zA-Z0-9\-_]+'
+              description: As per request.
+              
+  '/adviser-firm/{adviserId}/controls':
+    get:
+      tags:
+        - Adviser API
+      summary: Retrieve adviser permissions by an adviserId.
+      security:
+        - OAuth2: []
+      operationId: Retrieve adviser permissions.
+      parameters:
+        - name: adviserId
+          in: path
+          description: The adviserId of the adviser you want to retrieve the permissions for.
+          required: true
+          type: string
+  
+      responses:
+        '200':
+          description: Request has been successfully processed.
+          schema:
+            $ref: '#/definitions/AdviserControlResponse'
+        '400':
+          description: Bad request. Refer to the moreinfo section for details.  Please check that you've entered the correct parameters.
+          schema:
+            $ref: '#/definitions/MoreInfo'
+          headers:
+            requestId:
+              type: string
+              maxLength: 36
+              pattern: '[a-zA-Z0-9\-_]+'
+              description: As per request
+        '401':
+          description: Unable to authorise the credentials that were supplied.
+          schema:
+            $ref: '#/definitions/MoreInfo'
+          headers:
+            requestId:
+              type: string
+              maxLength: 36
+              pattern: '[a-zA-Z0-9\-_]+'
+              description: As per request
+        '404':
+          description: Adviser firm with the specified Id was not found.
+          schema:
+            $ref: '#/definitions/MoreInfo'
+          headers:
+            requestId:
+              type: string
+              maxLength: 36
+              pattern: '[a-zA-Z0-9\-_]+'
+              description: >-
+               requestId is supplied by the caller and should be a unique identifier for this call only.
+        '500':
+          description: There was an internal issue calling the service. This is likely to be a permanent error. Please contact FIL for support.
+          schema:
+            $ref: '#/definitions/MoreInfo'
+          headers:
+            requestId:
+              type: string
+              maxLength: 36
+              pattern: '[a-zA-Z0-9\-_]+'
+              description: As per request.
+
+definitions:
+
+  ConsultantControlResponse:
+    description: Consultant Permission Details
+    type: object
+    properties:
+      consultantId:
+        description: consultant code.
+        type: string
+      controls:
+        type: array
+        items:
+          $ref: '#/definitions/ConsultantControl'
+          
+  AdviserControlResponse:
+    description: Adviser Permission Details
+    type: object
+    properties:
+      adviserId:
+        description: adviser ID.
+        type: string
+      controls:
+        type: array
+        items:
+          $ref: '#/definitions/AdviserControl'
+      
+  ConsultantControl:
+    description: Consultant Permission Details
+    type: object
+    properties:
+      name:
+        type: string
+        enum:
+          - DEAL
+          - SAVE_ONLY
+          - ACCOUNTS
+          - FIRM_MODEL_PORTFOLIO
+          - LOGIN
+          - USER_MAINTENANCE
+      allowed:
+        type: boolean
+    example:
+      - name: DEALING
+        allowed: true
+      - name: CREATE_QUOTE
+        allowed: true
+      - name: LIST_ACCOUNTS
+        allowed: true
+      - name: FIRM_MODEL_PORTFOLIO
+        allowed: true
+      - name: LOGIN
+        allowed: true
+      - name: USER_MAINTENANCE
+        allowed: true
+        
+  AdviserControl:
+    description: Adviser Permission Details
+    type: object
+    properties:
+      name:
+        type: string
+        enum:
+          - FCA_AUTHORISED
+      allowed:
+        type: boolean
+    example:
+      - name: FCA_AUTHORISED
+        allowed: true
+
+  ConsultantResponse:
+    description: Consultant Details
+    type: object
+    required:
+      - consultantDetails
+    properties:
+      consultant:
+        $ref: '#/definitions/ConsultantDetails'
+  
+  ConsultantDetails:
+    description: Consultant Details
+    type: object
+    required:
+      - consultantId
+    properties:
+      consultantId:
+        description: consultant code.
+        type: string
+      consultantName:
+        $ref: '#/definitions/ConsultantName'
+      consultantRelationship:
+        type: array
+        items:
+          $ref: '#/definitions/ConsultantRelationship'
+        
+  ConsultantName:
+    type: object
+    required:
+      - firstName
+      - lastName
+    properties:
+      title:
+        type: string
+        description: A personal salutation or title. Valid values supported are - Mr, Mrs, Ms, Miss, Dr, Sir, Lady, Lord, Prof, Reverend, Madam, Mx.
+      firstName:
+        type: string
+        maxLength: 30
+        example: Jane
+        description: >-
+          Mandatory field. A-Z, a-z, dot, space, apostrophe, &, -(hyphen) are allowed.  
+      lastName:
+        type: string
+        maxLength: 20
+        example: Smith
+        description: >-
+          Mandatory field. A-Z,   a-z, dot, space, apostrophe, &, - (hyphen) are allowed.
+          
+  ConsultantRelationship:
+    type: object
+    properties:
+      id:
+        type: string
+        example: '170224'
+      relationship:
+        type: string
+        enum: 
+        - ADVISER
+
+  AdviserResponse:
+    description: Adviser Details
+    type: object
+    required:
+      - adviserDetails
+    properties:
+      adviser:
+        $ref: '#/definitions/AdviserDetails'
+  
+  AdviserDetails:
+    description: Adviser Details
+    type: object
+    required:
+      - adviserId
+    properties:
+      adviserId:
+        description: adviser ID.
+        type: string
+      adviserName:
+        description: adviser name.
+        type: string
+      designation:
+        description: adviser designation.
+        type: string
+        
+  MoreInfo:
+    required:
+      - code
+      - userMessage
+    type: object
+    properties:
+      code:
+        type: string
+        maxLength: 50
+      developerMessage:
+        type: array
+        items:
+          type: string
+        description: message details.
+      userMessage:
+        type: string
+        maxLength: 100
+      moreInfo:
+        type: string
+      errorMessages:
+        type: array
+        items:
+          $ref: '#/definitions/ErrorMessage'
+          
+  ErrorMessage:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      argument:
+        $ref: '#/definitions/Argument'
+      code:
+        type: string
+        maxLength: 50
+      userMessage:
+        type: string
+        maxLength: 100
+        
+  Argument:
+    type: object
+    required:
+      - key
+    properties:
+      key:
+        type: string
+        description: Field name for the returned message.
+        maxLength: 50
+      value:
+        type: string
+        description: >-
+          Erroneous value passed in request. Value will be sanitized for any
+          HTML code before being returned.
+        maxLength: 200
